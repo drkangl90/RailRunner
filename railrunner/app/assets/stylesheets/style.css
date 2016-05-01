@@ -1,0 +1,80 @@
+/* ******************************************************************
+ * ROOT ELEMENTS
+ * **************************************************************** */
+body {
+    background-color: black;
+
+    font-family: "Helvetica Neue", Arial, "Lucida Grande", sans-serif;
+    color: #BBBBBB;
+}
+
+div {
+    margin: 5px;
+    padding: 5px;
+
+    border: 1px #999999 solid;
+
+    background-color: #2E2F30;
+}
+
+p {
+    font-size: smaller;
+}
+
+a {
+    color: #730E15;
+}
+
+h1 {
+    font-size: xx-large;
+}
+h2 {
+    font-size: larger;
+}
+h3 {
+    font-size: large;
+}
+h4 {
+    font-size: medium;
+}
+h5 {
+    font-size: small;
+}
+
+/* ******************************************************************
+ * COMMON CLASSES
+ * *************************************************************** */
+div.centre {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ******************************************************************
+ * SPECIFIC COMPONENTS
+ * **************************************************************** */
+#header {
+    min-width: 650px;
+
+    border: 4px #999999 double;
+    border-radius: 20px;
+
+    background-color: #730E15;
+}
+
+#footer {
+    min-width: 650px;
+
+    border-radius: 20px;
+
+    background-color: #730E15;
+}
+
+#game_console {
+    min-width: 650px;
+}
+
+#game_canvas {
+    width: 600px;
+    height: 300px;
+    border: 1px solid black;
+}
