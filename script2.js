@@ -19,10 +19,6 @@
     CAMERA.position.set(posX, 5, posZ);
     SCENE.add(CAMERA);
 
-    // Controls
-    var controls;
-    var raycaster;
-
     // activating pointer lock 
     var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
     if (havePointerLock) {
@@ -40,9 +36,34 @@
         document.addEventListener('pointerlockchange', pointerlockchange, false);
         document.addEventListener('mozpointerlockchange', pointerlockchange, false);
         document.addEventListener('webkitpointerlockchange', pointerlockchange, false);
-        
-        
+        // Ask the browser to lock the pointer
+        element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
+        if (/Firefox/i.test(navigator.userAgent)) {
+            var fullscreenchange = function (event) {
+                if (document.fullscreenElement === element || document.mozFullscreenElement === element || document.mozFullScreenElement === element) {
+                    document.removeEventListener('fullscreenchange', fullscreenchange);
+                    document.removeEventListener('mozfullscreenchange', fullscreenchange);
+                    element.requestPointerLock();
+                }
+            };
+            document.addEventListener('fullscreenchange', fullscreenchange, false);
+            document.addEventListener('mozfullscreenchange', fullscreenchange, false);
+            element.requestFullscreen = element.requestFullscreen || element.mozRequestFullscreen || element.mozRequestFullScreen || element.webkitRequestFullscreen;
+            element.requestFullscreen();
+        } else {
+            element.requestPointerLock();
+        }
     }
+    // Controls
+    var controls;
+    var raycaster;
+    var controlsEnabled = false;
+    var moveForward = false;
+    var moveBackward = false;
+    var moveLeft = false;
+    var moveRight = false;
+    var canJump = false;
+
 
     // CREATE THE GROUND
     var planeGeometry = new THREE.PlaneGeometry(500, 500);
