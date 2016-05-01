@@ -19,7 +19,30 @@
     CAMERA.position.set(posX, 5, posZ);
     SCENE.add(CAMERA);
 
+    // Controls
+    var controls;
+    var raycaster;
 
+    // activating pointer lock 
+    var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
+    if (havePointerLock) {
+        var element = document.body;
+        var pointerlockchange = function (event) {
+            if (document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element) {
+                controlsEnabled = true;
+                controls.enabled = true;
+            }
+            else {
+                controls.enabled = false;
+            }
+        }
+        // Hook pointer lock state change events
+        document.addEventListener('pointerlockchange', pointerlockchange, false);
+        document.addEventListener('mozpointerlockchange', pointerlockchange, false);
+        document.addEventListener('webkitpointerlockchange', pointerlockchange, false);
+        
+        
+    }
 
     // CREATE THE GROUND
     var planeGeometry = new THREE.PlaneGeometry(500, 500);
@@ -36,9 +59,9 @@
     planeMaterial.map.wrapT = THREE.RepeatWrapping;
     planeMaterial.map.repeat.set(500, 500);
 
-    //center of the ground quad
+    // center of the ground quad
     planeMesh.position.set(-2.5, -2.5, -2.5);
-    //set it horizontally because planeGeometry is along X,Y
+    // set it horizontally because planeGeometry is along X,Y
     planeMesh.rotateX(-Math.PI / 2); 
 
     planeMaterial.map.repeat.x = planeMaterial.map.repeat.y = 20;
