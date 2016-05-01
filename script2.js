@@ -8,9 +8,7 @@
         antialias : true,
         canvas : CANVAS
     });
-    // shadows
-    RENDERER.shadowMapEnabled = true;
-    RENDERER.shadowMapType = THREE.PCFShadowMap;
+
 
     // CREATE THE SCENE
     var SCENE = new THREE.Scene();
@@ -20,6 +18,8 @@
     var posX = 0, posZ = 20;
     CAMERA.position.set(posX, 5, posZ);
     SCENE.add(CAMERA);
+
+
 
     // CREATE THE GROUND
     var planeGeometry = new THREE.PlaneGeometry(500, 500);
@@ -40,9 +40,6 @@
     planeMesh.position.set(-2.5, -2.5, -2.5);
     //set it horizontally because planeGeometry is along X,Y
     planeMesh.rotateX(-Math.PI / 2); 
-    // shadow
-    planeMesh.castShadow = false;
-    planeMesh.receiveShadow = true;
 
     planeMaterial.map.repeat.x = planeMaterial.map.repeat.y = 20;
     SCENE.add(planeMesh);
@@ -58,15 +55,7 @@
     var spotLight = new THREE.SpotLight(0xffffff);
     spotLight.intensity = 2;
     spotLight.position.set(0, 10, 5);
-    // shadow
-    spotLight.castShadow = true;
 
-    spotLight.shadowMapWidth = 512;
-    spotLight.shadowMapHeight = 512;
-
-    spotLight.shadowCameraNear = 5;
-    spotLight.shadowCameraFar = 20;
-    spotLight.shadowCameraFov = 60;
     // ambient light
     var ambientLight = new THREE.AmbientLight(0xffaa33);
     ambientLight.intensity = 1;
