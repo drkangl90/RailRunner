@@ -1,14 +1,18 @@
-﻿
 <!DOCTYPE html>
 <html>
+    
 <head>
     <meta charset='utf-8' />
-    <script type="text/javascript" src="libs/three.js"></script>
-    <script type="text/javascript" src="libs/PointerLockControls.js"></script>
-    <script type="text/javascript" src="script2.js"></script>
+    <!-- Third Party Dependencies -->
+    <script type="text/javascript" src="railrunner/vendor/assets/javascripts/three.js"></script>
+    <script type="text/javascript" src="railrunner/vendor/assets/javascripts/PointerLockControls.js"></script>
+    <!-- Game Scripts -->
+    <script type="text/javascript" src="railrunner/app/assets/javascripts/rail_runner.js.erb"></script>
 </head>
+
 <body style='margin:0px' onload='main()'>
-    <canvas id='your_canvas'
+    <canvas id='game_canvas'
             style='position: absolute;'></canvas>
 </body>
+
 </html>
