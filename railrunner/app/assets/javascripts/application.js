@@ -10,7 +10,14 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+// Critical Libraries
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//
+// Third Party Dependencies
+//= require three
+//= require PointerLockControls
+//
+// Our Scripts (assets/*)
 //= require_tree .
