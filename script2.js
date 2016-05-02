@@ -19,51 +19,45 @@
     CAMERA.position.set(posX, 5, posZ);
     SCENE.add(CAMERA);
 
-    // activating pointer lock 
-    var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
-    if (havePointerLock) {
-        var element = document.body;
-        var pointerlockchange = function (event) {
-            if (document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element) {
-                controlsEnabled = true;
-                controls.enabled = true;
-            }
-            else {
-                controls.enabled = false;
-            }
-        }
-        // Hook pointer lock state change events
-        document.addEventListener('pointerlockchange', pointerlockchange, false);
-        document.addEventListener('mozpointerlockchange', pointerlockchange, false);
-        document.addEventListener('webkitpointerlockchange', pointerlockchange, false);
-        // Ask the browser to lock the pointer
-        element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
-        if (/Firefox/i.test(navigator.userAgent)) {
-            var fullscreenchange = function (event) {
-                if (document.fullscreenElement === element || document.mozFullscreenElement === element || document.mozFullScreenElement === element) {
-                    document.removeEventListener('fullscreenchange', fullscreenchange);
-                    document.removeEventListener('mozfullscreenchange', fullscreenchange);
-                    element.requestPointerLock();
-                }
-            };
-            document.addEventListener('fullscreenchange', fullscreenchange, false);
-            document.addEventListener('mozfullscreenchange', fullscreenchange, false);
-            element.requestFullscreen = element.requestFullscreen || element.mozRequestFullscreen || element.mozRequestFullScreen || element.webkitRequestFullscreen;
-            element.requestFullscreen();
-        } else {
-            element.requestPointerLock();
-        }
-    }
-    // Controls
-    var controls;
-    var raycaster;
-    var controlsEnabled = false;
-    var moveForward = false;
-    var moveBackward = false;
-    var moveLeft = false;
-    var moveRight = false;
-    var canJump = false;
+    // CONTROLS
+    var GRAVITY = 9.8; //Gravity on the Earth in kg/s²
+    var Vy = 0;        //Tux velocity along the vertical axis
+    var VIEWPORTVECTOR = new THREE.Vector3();
+    var DIRECTIONVECTOR = new THREE.Vector3();
 
+    var PROJECTOR = new THREE.Projector();
+    var RAYCASTER = new THREE.Raycaster();
+
+    var drag = false, oldX, oldY, dX = 0, dY = 0, rotX = 0, rotY = 0;
+    window.onmousedown = function (event) {
+        var x = 2 * event.clientX / CANVAS.width - 1;
+        var y = -(2 * event.clientY / CANVAS.height - 1);
+
+        VIEWPORTVECTOR.set(x, y, 1);
+        DIRECTIONVECTOR.copy(VIEWPORTVECTOR);
+        PROJECTOR.unprojectVector(DIRECTIONVECTOR, CAMERA);
+
+        //DIRECTIONVECTOR is not a vector, but the targeted point which is
+        //in the camera Zfar plane.
+
+        //to get the real pointer direction, we must substract the camera position
+        DIRECTIONVECTOR.sub(CAMERA.position);
+
+        //We normalize it
+        DIRECTIONVECTOR.normalize();
+        //We give to the raycaster all information about the ray (origin, direction)
+        RAYCASTER.set(CAMERA.position, DIRECTIONVECTOR);
+
+        //Ask the raycaster for intersects with all objects in the scene:
+        // (The second arguments means "recursive")
+        var intersects = RAYCASTER.intersectObjects(SCENE.children, true);
+
+        if (intersects.length) {
+            //there is at least 1 intersected object
+            Vy = 10;
+            cube.rotation.y += 5;
+        }
+    };
 
     // CREATE THE GROUND
     var planeGeometry = new THREE.PlaneGeometry(500, 500);
@@ -90,7 +84,7 @@
 
     // CREATE CUBE
     var geometry = new THREE.BoxGeometry(5, 5, 5);
-    var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    var material = new THREE.MeshNormalMaterial(false, 1, false);
     var cube = new THREE.Mesh(geometry, material);
     SCENE.add(cube);
 
@@ -108,13 +102,29 @@
     SCENE.add(spotLight);
 
     // RENDER LOOP
-    var animate = function () {
+    var old_time = 0;
+    var animate = function (timestamp) {
+
+        var dt = (timestamp - old_time) / 1e3; //time step in milliseconds
+        old_time = timestamp;
+
+        //apply acceleration to update TUX vertical velocity
+        Vy += -GRAVITY * dt;
+
+        //apply velocity to update TUX position
+        cube.position.setY(cube.position.y + dt * Vy);
+
+        //if cube hits the ground
+        if (cube.position.y < 1.6) {
+            cube.position.setY(1.6);
+            Vy = 0;
+        }
         RENDERER.render(SCENE, CAMERA);
 
         //cube.rotation.x += 0.1;
         //cube.rotation.y += 0.1;
-
+       
         requestAnimationFrame(animate);
     };
-    animate();
+    animate(0);
 }
