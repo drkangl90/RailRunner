@@ -66,25 +66,19 @@ function legacy() {
     };
 
     // CREATE THE GROUND
-    var planeGeometry = new THREE.PlaneGeometry(500, 500);
+    var planeGeometry = new THREE.PlaneBufferGeometry(1500, 1500);
     var planeMaterial = new THREE.MeshPhongMaterial({
-        ambient: 0x555555,
-        color: 0xdddddd,
-        specular: 0x009900,
+        color: 0xffffff,
+        specular: 0x050505
         //map: THREE.ImageUtils.loadTexture('moss.jpg'),
-        shininess: 30
     });
+    planeMaterial.color.setHSL(0.195, 1, 0.75);
     var planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
 
-    /*planeMaterial.map.wrapS = THREE.RepeatWrapping;
-    planeMaterial.map.wrapT = THREE.RepeatWrapping;
-    planeMaterial.map.repeat.set(500, 500); */
-
     // center of the ground quad
-    planeMesh.position.set(-2.5, -2.5, -2.5);
+    planeMesh.position.y = -2.5;
     // set it horizontally because planeGeometry is along X,Y
-    planeMesh.rotateX(-Math.PI / 2);
-
+    planeMesh.rotation.x = (-Math.PI / 2);
     //planeMaterial.map.repeat.x = planeMaterial.map.repeat.y = 20;
     SCENE.add(planeMesh);
 
@@ -96,16 +90,20 @@ function legacy() {
 
 
     // ADD THE LIGHTS
-    var spotLight = new THREE.SpotLight(0xffffff);
-    spotLight.intensity = 2;
-    spotLight.position.set(0, 10, 5);
+    //var spotLight = new THREE.SpotLight(0xffffff);
+    //spotLight.intensity = 2;
+    //spotLight.position.set(0, 10, 5);
 
     // ambient light
     var ambientLight = new THREE.AmbientLight(0xffaa33);
     ambientLight.intensity = 1;
     SCENE.add(ambientLight);
 
-    
+    var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6);
+    hemiLight.color.setHSL(0.6, 1, 0.6);
+    hemiLight.groundColor.setHSL(0.095, 1, 0.75);
+    hemiLight.position.set(0, 500, 0);
+    SCENE.add(hemiLight);
 
     // RENDER LOOP
     var old_time = 0;
