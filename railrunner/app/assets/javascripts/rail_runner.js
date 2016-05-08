@@ -1,9 +1,10 @@
-﻿function main() {
-    // CREATE THE CANVAS
-    var CANVAS = document.getElementById("game_canvas");
-    CANVAS.width = window.innerWidth;
-    CANVAS.height = window.innerHeight;
+// CREATE THE CANVAS
+var CANVAS = document.getElementById("game_canvas");
+CANVAS.width = window.innerWidth;
+CANVAS.height = window.innerHeight;
 
+function main() {
+    
     var RENDERER = new THREE.WebGLRenderer({
         antialias : true,
         canvas : CANVAS
