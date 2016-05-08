@@ -1,4 +1,10 @@
 function main() {
+    RAIL_ENGINE.init('game_canvas');
+    
+    RAIL_ENGINE.load_world();
+}
+
+function legacy() {
     // CREATE THE CANVAS
     var CANVAS = document.getElementById("game_canvas");
     CANVAS.width = window.innerWidth;
@@ -99,7 +105,7 @@ function main() {
     ambientLight.intensity = 1;
     SCENE.add(ambientLight);
 
-    SCENE.add(spotLight);
+    
 
     // RENDER LOOP
     var old_time = 0;
