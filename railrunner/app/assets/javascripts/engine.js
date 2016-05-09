@@ -32,15 +32,18 @@ var RAIL_ENGINE = RAIL_ENGINE || (function() {
         load_world : function() {
             SCENE.add(CAMERA);
             
+            // Lighting
             var ambientLight = new THREE.AmbientLight(0xffaa33);
             ambientLight.intensity = 1;
             SCENE.add(ambientLight);
+
+            var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6);
+            hemiLight.color.setHSL(0.6, 1, 0.6);
+            hemiLight.groundColor.setHSL(0.095, 1, 0.75);
+            hemiLight.position.set(0, 500, 0);
+            SCENE.add(hemiLight);
             
-            var spotLight = new THREE.SpotLight(0xffffff);
-            spotLight.intensity = 2;
-            spotLight.position.set(0, 10, 5);
-            SCENE.add(spotLight);
-            
+                        
             // [TEMP] Stand-In Ground
             var ground = new THREE.Mesh(
                 new THREE.PlaneGeometry(100, 100),
