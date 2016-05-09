@@ -1,8 +1,12 @@
+
 function GameObject() {
     // 3D Transform
     var location    = [0,0,0];
     var orientation = [0,0,0];
-    var size        = [5,5,5];
+    var size = [5, 5, 5];
+
+    // field variables
+    var up = true;
     
     // Drawable Representation (cube currently)
     var avatar = new THREE.Mesh(
@@ -13,11 +17,35 @@ function GameObject() {
     
     return {
         constructor : GameObject,
-        update : function(clock_tick) {
-            orientation[0] += 0.1;
-            orientation[1] += 0.1;
+        update: function (clock_tick) {
+            // rotation of object
+            orientation[0] += 0.15;
+            orientation[1] += 0.15;
             avatar.rotation.x = orientation[0];
             avatar.rotation.y = orientation[1];
+
+            // location of object
+            // have object up up
+            if (up == true){
+                location[1] += 0.1;
+                avatar.position.y = location[1];
+                if (location[1] >= 8) {
+                    up = false;
+                }
+            }
+            
+            // have object go downward
+            if (up == false)
+            {
+                location[1] -= 0.1;
+                avatar.position.y = location[1];
+                if (location[1] <= 0) {
+                    up = true;
+                    location[1] = 0;
+                }
+            }
+            
+            
         },
         get_avatar : function() {
             return avatar;
