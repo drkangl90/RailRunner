@@ -1,4 +1,4 @@
-var RAIL_ENGINE = RAIL_ENGINE || (function(){
+var RAIL_ENGINE = RAIL_ENGINE || (function() {
     var CANVAS = undefined;
     var CAMERA = undefined;
     var SCENE = undefined;
@@ -41,13 +41,6 @@ var RAIL_ENGINE = RAIL_ENGINE || (function(){
             spotLight.position.set(0, 10, 5);
             SCENE.add(spotLight);
             
-            // [TEMP] Stand-In Cube
-            var cube = new THREE.Mesh(
-                new THREE.BoxGeometry(5,5,5),
-                new THREE.MeshNormalMaterial(false, 1, false)
-            );
-            SCENE.add(cube);
-            
             // [TEMP] Stand-In Ground
             var ground = new THREE.Mesh(
                 new THREE.PlaneGeometry(100, 100),
@@ -60,8 +53,13 @@ var RAIL_ENGINE = RAIL_ENGINE || (function(){
             ground.position.set(0, -2.5, 0);
             ground.rotateX(-Math.PI / 2);
             SCENE.add(ground);
-            
+        },
+        add_drawable : function(threeJsDrawable) {
+            SCENE.add(threeJsDrawable);
+        },
+        draw_world : function() {
             RENDERER.render(SCENE, CAMERA);
         }
+        
     };
 }());
