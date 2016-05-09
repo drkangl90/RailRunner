@@ -37,9 +37,8 @@ var GAME = GAME || (function() {
     return {
         init : function() {
             dude = new GameObject();
+            RAIL_ENGINE.add_game_object(dude);
             RAIL_ENGINE.add_drawable(dude.get_avatar());
-            
-            setInterval(dude.update, 100);
         }
     }
     

@@ -5,6 +5,7 @@ function main() {
     GAME.init();
     
     RAIL_ENGINE.start_draw_thread();
+    RAIL_ENGINE.start_game_thread();
 }
 
 function legacy() {

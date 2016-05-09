@@ -1,12 +1,14 @@
 var RAIL_ENGINE = RAIL_ENGINE || (function() {
+    // THREE.JS Components
     var CANVAS = undefined;
     var RENDERER = undefined;
     var CAMERA = undefined;
     var SCENE = undefined;
     
-    var draw_frame_rate = 20 // [milliseconds]
-    var draw_thread_active = false;
+    var game_objects = [];
     
+    var draw_frame_rate = 50; // [milliseconds]
+    var draw_thread_active = false;
     function draw_frame() {
         RENDERER.render(SCENE, CAMERA);
         
@@ -15,6 +17,17 @@ var RAIL_ENGINE = RAIL_ENGINE || (function() {
         }
     }
 
+    var game_frame_rate = 25;
+    var game_thread_active = false;
+    function game_frame() {
+        if (game_thread_active) {
+            var l = game_objects.length;
+            for(var i = 0; i < l; i++) {
+                game_objects[i].update(game_frame_rate);
+            }
+        }
+    }
+    
     return {
         init : function(canvas_id) {
             if (CANVAS) {
@@ -35,6 +48,10 @@ var RAIL_ENGINE = RAIL_ENGINE || (function() {
             CAMERA = new THREE.PerspectiveCamera(50, CANVAS.width / CANVAS.height, 0.1, 1000);
             CAMERA.position.set(0, 5, 20);
         },
+        
+        /**
+         * Generate an empty world - ready to be drawn to the canvas.
+         */
         generate_scene : function() {
             if (! CANVAS || SCENE) {
                 return false;
@@ -78,12 +95,23 @@ var RAIL_ENGINE = RAIL_ENGINE || (function() {
             draw_thread_active = true;
             window.requestAnimationFrame(draw_frame);
         },
-        add_drawable : function(threeJsDrawable) {
+        start_game_thread() {
+            if (! SCENE || game_thread_active) {
+                return false;
+            }
+            
+            game_thread_active = true;
+            setInterval(game_frame, game_frame_rate);
+        },
+        add_game_object : function(game_object) {
+            game_objects.push(game_object);
+        },
+        add_drawable : function(three_js_drawable) {
             if (! SCENE) {
                 return false;
             }
             
-            SCENE.add(threeJsDrawable);
+            SCENE.add(three_js_drawable);
         }
     };
 }());
