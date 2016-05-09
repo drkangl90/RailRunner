@@ -1,14 +1,26 @@
 var RAIL_ENGINE = RAIL_ENGINE || (function() {
     var CANVAS = undefined;
+    var RENDERER = undefined;
     var CAMERA = undefined;
     var SCENE = undefined;
     
-    var RENDERER = undefined;
-    var PROJECTOR = undefined;
-    var RAYCASTER = undefined;
+    var draw_frame_rate = 20 // [milliseconds]
+    var draw_thread_active = false;
+    
+    function draw_frame() {
+        RENDERER.render(SCENE, CAMERA);
+        
+        if (draw_thread_active) {
+            window.requestAnimationFrame(draw_frame);
+        }
+    }
 
     return {
         init : function(canvas_id) {
+            if (CANVAS) {
+                return false;    
+            }
+            
             // CREATE THE CANVAS
             CANVAS = document.getElementById(canvas_id);
             CANVAS.width = window.innerWidth;
@@ -19,17 +31,18 @@ var RAIL_ENGINE = RAIL_ENGINE || (function() {
                 canvas : CANVAS
             });
             
-            // CREATE THE SCENE
-            SCENE = new THREE.Scene();
-            
             // CREATE THE CAMERA
             CAMERA = new THREE.PerspectiveCamera(50, CANVAS.width / CANVAS.height, 0.1, 1000);
             CAMERA.position.set(0, 5, 20);
-            
-            PROJECTOR = new THREE.Projector();
-            RAYCASTER = new THREE.Raycaster();
         },
-        load_world : function() {
+        generate_scene : function() {
+            if (! CANVAS || SCENE) {
+                return false;
+            }
+            
+            // CREATE THE SCENE
+            SCENE = new THREE.Scene();
+            
             SCENE.add(CAMERA);
             
             // Lighting
@@ -57,12 +70,20 @@ var RAIL_ENGINE = RAIL_ENGINE || (function() {
             ground.rotateX(-Math.PI / 2);
             SCENE.add(ground);
         },
-        add_drawable : function(threeJsDrawable) {
-            SCENE.add(threeJsDrawable);
+        start_draw_thread() {
+            if (! SCENE || draw_thread_active) {
+                return false;
+            }
+            
+            draw_thread_active = true;
+            window.requestAnimationFrame(draw_frame);
         },
-        draw_world : function() {
-            RENDERER.render(SCENE, CAMERA);
+        add_drawable : function(threeJsDrawable) {
+            if (! SCENE) {
+                return false;
+            }
+            
+            SCENE.add(threeJsDrawable);
         }
-        
     };
 }());

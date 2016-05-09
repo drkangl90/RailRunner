@@ -13,6 +13,12 @@ function GameObject() {
     
     return {
         constructor : GameObject,
+        update : function(clock_tick) {
+            orientation[0] += 0.1;
+            orientation[1] += 0.1;
+            avatar.rotation.x = orientation[0];
+            avatar.rotation.y = orientation[1];
+        },
         get_avatar : function() {
             return avatar;
         }
@@ -32,6 +38,8 @@ var GAME = GAME || (function() {
         init : function() {
             dude = new GameObject();
             RAIL_ENGINE.add_drawable(dude.get_avatar());
+            
+            setInterval(dude.update, 100);
         }
     }
     

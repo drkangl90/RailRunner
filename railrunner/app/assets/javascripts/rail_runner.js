@@ -1,9 +1,10 @@
 function main() {
     RAIL_ENGINE.init('game_canvas');
-    RAIL_ENGINE.load_world();
+    RAIL_ENGINE.generate_scene();
     
     GAME.init();
-    RAIL_ENGINE.draw_world();
+    
+    RAIL_ENGINE.start_draw_thread();
 }
 
 function legacy() {
