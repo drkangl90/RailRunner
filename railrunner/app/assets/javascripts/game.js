@@ -2,11 +2,11 @@ function GameObject() {
     // 3D Transform
     var location    = [0,0,0];
     var orientation = [0,0,0];
-    var scale       = [1,1,1];
+    var size        = [5,5,5];
     
     // Drawable Representation (cube currently)
     var avatar = new THREE.Mesh(
-        new THREE.BoxGeometry(scale[0], scale[1], scale[2]),
+        new THREE.BoxGeometry(size[0], size[1], size[2]),
         new THREE.MeshNormalMaterial(false, 1, false)
     );
     avatar.position.set(location[0], location[1], location[2]);
