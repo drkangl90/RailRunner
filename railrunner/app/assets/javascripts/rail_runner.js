@@ -66,7 +66,7 @@ function legacy() {
             cube.rotation.y += 5;
         }
     };
-
+    
     // CREATE THE GROUND
     var planeGeometry = new THREE.PlaneBufferGeometry(1500, 1500);
     var planeMaterial = new THREE.MeshPhongMaterial({

@@ -4,7 +4,7 @@ function GameObject() {
     var orientation = [0,0,0];
     var scale       = [1,1,1];
     
-    // Drawable Representation
+    // Drawable Representation (cube currently)
     var avatar = new THREE.Mesh(
         new THREE.BoxGeometry(scale[0], scale[1], scale[2]),
         new THREE.MeshNormalMaterial(false, 1, false)
