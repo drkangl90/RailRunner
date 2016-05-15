@@ -6,7 +6,7 @@ function main() {
     
     RAIL_ENGINE.start_draw_thread();
     RAIL_ENGINE.start_game_thread();
-    RAIL_ENGINE.set_clicked(true);
+    //RAIL_ENGINE.set_clicked(true);
     window.onmousedown = function(event) {
         RAIL_ENGINE.set_clicked(true);
     }
