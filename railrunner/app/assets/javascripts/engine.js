@@ -7,6 +7,8 @@ var RAIL_ENGINE = RAIL_ENGINE || (function() {
     
     var game_objects = [];
     
+    var clicked = false;
+    
     var draw_frame_rate = 50; // [milliseconds]
     var draw_thread_active = false;
     function draw_frame() {
@@ -23,7 +25,7 @@ var RAIL_ENGINE = RAIL_ENGINE || (function() {
         if (game_thread_active) {
             var l = game_objects.length;
             for(var i = 0; i < l; i++) {
-                game_objects[i].update(game_frame_rate);
+                game_objects[i].update(game_frame_rate, clicked);
             }
         }
     }
@@ -112,6 +114,10 @@ var RAIL_ENGINE = RAIL_ENGINE || (function() {
             }
             
             SCENE.add(three_js_drawable);
+        },
+        
+        set_clicked : function(c) {
+            clicked = c;
         }
     };
 }());

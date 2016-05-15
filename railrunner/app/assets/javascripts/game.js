@@ -5,8 +5,6 @@ function GameObject() {
     var orientation = [0,0,0];
     var size = [5, 5, 5];
 
-    // field variables
-    var up = true;
     
     // Drawable Representation (cube currently)
     var avatar = new THREE.Mesh(
@@ -17,31 +15,39 @@ function GameObject() {
     
     return {
         constructor : GameObject,
-        update: function (clock_tick) {
-            // rotation of object
-            orientation[0] += 0.15;
-            orientation[1] += 0.15;
-            avatar.rotation.x = orientation[0];
-            avatar.rotation.y = orientation[1];
+        update: function (clock_tick, clicked) {
+            
 
             // location of object
             // have object up up
-            if (up == true){
+            if (clicked){
                 location[1] += 0.1;
                 avatar.position.y = location[1];
-                if (location[1] >= 8) {
-                    up = false;
-                }
+                // rotation of object
+                orientation[0] += 0.15;
+                orientation[1] += 0.15;
+                avatar.rotation.x = orientation[0];
+                avatar.rotation.y = orientation[1];
             }
             
             // have object go downward
-            if (up == false)
+            if (!clicked)
             {
-                location[1] -= 0.1;
-                avatar.position.y = location[1];
+                if (location[1] > 0)
+                {
+                    location[1] -= 0.1;
+                    avatar.position.y = location[1];
+                    // rotation of object
+                    orientation[0] += 0.15;
+                    orientation[1] += 0.15;
+                    avatar.rotation.x = orientation[0];
+                    avatar.rotation.y = orientation[1];
+                }
+
                 if (location[1] <= 0) {
-                    up = true;
                     location[1] = 0;
+
+                    // modify orientation
                 }
             }
             
