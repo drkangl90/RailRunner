@@ -17,7 +17,7 @@ function GameObject() {
     
     return {
         constructor : GameObject,
-        update: function (clock_tick) {
+        update: function (clock_tick, clicked) {
             // rotation of object
             orientation[0] += 0.15;
             orientation[1] += 0.15;
@@ -26,7 +26,7 @@ function GameObject() {
 
             // location of object
             // have object up up
-            if (up == true){
+            if (clicked == true){
                 location[1] += 0.1;
                 avatar.position.y = location[1];
                 if (location[1] >= 8) {
@@ -35,7 +35,7 @@ function GameObject() {
             }
             
             // have object go downward
-            if (up == false)
+            if (clicked == false)
             {
                 location[1] -= 0.1;
                 avatar.position.y = location[1];

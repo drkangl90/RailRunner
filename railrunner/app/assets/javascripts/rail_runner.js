@@ -6,6 +6,13 @@ function main() {
     
     RAIL_ENGINE.start_draw_thread();
     RAIL_ENGINE.start_game_thread();
+    
+    window.onmousedown = function(event) {
+        RAIL_ENGINE.set_clicked(true);
+    }
+    window.onmouseup = function(event) {
+        RAIL_ENGINE.set_clicked(false);
+    }
 }
 
 function legacy() {
