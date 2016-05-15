@@ -1,7 +1,7 @@
 
 function GameObject() {
     // 3D Transform
-    var location    = [0,0,0];
+    var location    = [-5,0,0];
     var orientation = [0,0,0];
     var size = [5, 5, 5];
 
