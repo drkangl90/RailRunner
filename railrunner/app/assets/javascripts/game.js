@@ -20,9 +20,12 @@ function GameObject() {
 
             // location of object
             // have object up up
-            if (clicked){
-                location[1] += 0.1;
-                avatar.position.y = location[1];
+            if (clicked) {
+                if (location[1] < 10)
+                {
+                    location[1] += 0.1;
+                    avatar.position.y = location[1];
+                }
                 // rotation of object
                 orientation[0] += 0.15;
                 orientation[1] += 0.15;
