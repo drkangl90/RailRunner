@@ -26,7 +26,7 @@ function GameObject() {
 
             // location of object
             // have object up up
-            if (clicked == true){
+            if (clicked){
                 location[1] += 0.1;
                 avatar.position.y = location[1];
                 if (location[1] >= 8) {
@@ -35,7 +35,7 @@ function GameObject() {
             }
             
             // have object go downward
-            if (clicked == false)
+            if (!clicked)
             {
                 location[1] -= 0.1;
                 avatar.position.y = location[1];
