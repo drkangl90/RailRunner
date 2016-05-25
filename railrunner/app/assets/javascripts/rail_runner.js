@@ -3,6 +3,7 @@ function main() {
     RAIL_ENGINE.generate_scene();
     
     GAME.init();
+    DEATH.init();
     
     RAIL_ENGINE.start_draw_thread();
     RAIL_ENGINE.start_game_thread();
