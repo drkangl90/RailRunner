@@ -75,6 +75,6 @@ div.centre {
 
 #game_canvas {
     width: 600px;
-    height: 600px;
+    height: 350px; /* ~16x9 */
     border: 1px solid black;
 }

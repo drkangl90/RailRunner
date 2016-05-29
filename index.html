@@ -3,6 +3,13 @@
     
 <head>
     <meta charset='utf-8' />
+
+    <!-- Page Info -->
+    <title>Rail Runner LITE</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" type="text/css" href="railrunner/app/assets/stylesheets/style.css">
+
     <!-- Third Party Dependencies -->
     <script type="text/javascript" src="railrunner/vendor/assets/javascripts/three.js"></script>
     <script type="text/javascript" src="railrunner/vendor/assets/javascripts/PointerLockControls.js"></script>
@@ -14,8 +21,11 @@
 </head>
 
 <body style='margin:0px' onload='main()'>
-    <canvas id='game_canvas'
-            style='position: absolute;'></canvas>
+    <!-- Game Console -->
+    <div id="game_console">
+        <!-- WebGL Target Canvas -->
+        <canvas id='game_canvas' class="centre"></canvas>
+    </div>
 </body>
 
 </html>
