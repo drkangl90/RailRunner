@@ -3,8 +3,7 @@ function GameObject() {
     // 3D Transform
     var location    = [-5,0,0];
     var orientation = [0,0,0];
-    var size = [5, 5, 5];
-
+    var size        = [5, 5, 5];
     
     // Drawable Representation (cube currently)
     var avatar = new THREE.Mesh(
@@ -16,10 +15,6 @@ function GameObject() {
     return {
         constructor : GameObject,
         update: function (clock_tick, clicked) {
-            
-
-            // location of object
-            // have object up up
             if (clicked) {
                 if (location[1] < 10)
                 {
@@ -53,8 +48,6 @@ function GameObject() {
                     // modify orientation
                 }
             }
-            
-            
         },
         get_avatar : function() {
             return avatar;
