@@ -4,7 +4,13 @@ function GameObject() {
     var location    = [-5,0,0];
     var orientation = [0,0,0];
     var size        = [5, 5, 5];
-    
+
+    // Jumping
+    var jumpHeight  = 10;
+    var jumpSpeed   = 0.3;
+    var jumpStarted = false;
+    var jumpPeaked  = false;
+
     // Drawable Representation (cube currently)
     var avatar = new THREE.Mesh(
         new THREE.BoxGeometry(size[0], size[1], size[2]),
@@ -15,39 +21,49 @@ function GameObject() {
     return {
         constructor : GameObject,
         update: function (clock_tick, clicked) {
+
             if (clicked) {
-                if (location[1] < 10)
-                {
-                    location[1] += 0.1;
-                    avatar.position.y = location[1];
+                jumpStarted = true;
+            }
+
+            //- Jump Behavior ----------------------------=
+            //
+            if (jumpStarted) {
+                // Going Up
+                if (! jumpPeaked) {
+                    if (location[1] < jumpHeight) {
+                        location[1] += jumpSpeed;
+                    } else {
+                        jumpPeaked = true;
+                    }
                 }
-                // rotation of object
-                orientation[0] += 0.15;
+                // Going Down
+                else {
+                    location[1] -= jumpSpeed;
+
+                    if (location[1] <= 0) {
+                        location[1] = 0;
+
+                        jumpStarted = false;
+                        jumpPeaked = false;
+                    }
+                }
+
+                // Apply Lateral Spin
                 orientation[1] += 0.15;
-                avatar.rotation.x = orientation[0];
-                avatar.rotation.y = orientation[1];
             }
-            
-            // have object go downward
-            if (!clicked)
-            {
-                if (location[1] > 0)
-                {
-                    location[1] -= 0.1;
-                    avatar.position.y = location[1];
-                    // rotation of object
-                    orientation[0] += 0.15;
-                    orientation[1] += 0.15;
-                    avatar.rotation.x = orientation[0];
-                    avatar.rotation.y = orientation[1];
-                }
 
-                if (location[1] <= 0) {
-                    location[1] = 0;
-
-                    // modify orientation
-                }
-            }
+            //- Update Avatar ----------------------------=
+            //
+            // Location
+            avatar.position.x = location[0];
+            avatar.position.y = location[1];
+            avatar.position.z = location[2];
+            //
+            // Orientation
+            avatar.rotation.x = orientation[0];
+            avatar.rotation.y = orientation[1];
+            avatar.rotation.z = orientation[2];
         },
         get_avatar : function() {
             return avatar;
