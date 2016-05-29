@@ -5,7 +5,7 @@ var RAIL_ENGINE = RAIL_ENGINE || (function() {
     var CAMERA = undefined;
     var SCENE = undefined;
     
-    var game_objects = [];
+    var player_objects = [];
     var death_objects = [];
     
     var clicked = false;
@@ -24,10 +24,10 @@ var RAIL_ENGINE = RAIL_ENGINE || (function() {
     var game_thread_active = false;
     function game_frame() {
         if (game_thread_active) {
-            var l = game_objects.length;
+            var l = player_objects.length;
             var m = death_objects.length;
             for(var i = 0; i < l; i++) {
-                game_objects[i].update(game_frame_rate, clicked);
+                player_objects[i].update(game_frame_rate, clicked);
                 death_objects[i].update(game_frame_rate);
             }
         }
@@ -116,8 +116,8 @@ var RAIL_ENGINE = RAIL_ENGINE || (function() {
         /**
          * World CRUD operations
          */
-        add_game_object : function(game_object) {
-            game_objects.push(game_object);
+        add_player_object : function(player_object) {
+            player_objects.push(player_object);
         },
         add_death_object: function (death_object) {
             death_objects.push(death_object);
