@@ -92,7 +92,11 @@ var RAIL_ENGINE = RAIL_ENGINE || (function() {
             ground.rotateX(-Math.PI / 2);
             SCENE.add(ground);
         },
-        start_draw_thread() {
+
+        /**
+         * Start the update cycles for Rendering and Game Frames
+         */
+        start_draw_thread : function() {
             if (! SCENE || draw_thread_active) {
                 return false;
             }
@@ -100,7 +104,7 @@ var RAIL_ENGINE = RAIL_ENGINE || (function() {
             draw_thread_active = true;
             window.requestAnimationFrame(draw_frame);
         },
-        start_game_thread() {
+        start_game_thread : function() {
             if (! SCENE || game_thread_active) {
                 return false;
             }
@@ -108,6 +112,10 @@ var RAIL_ENGINE = RAIL_ENGINE || (function() {
             game_thread_active = true;
             setInterval(game_frame, game_frame_rate);
         },
+
+        /**
+         * World CRUD operations
+         */
         add_game_object : function(game_object) {
             game_objects.push(game_object);
         },
@@ -128,7 +136,10 @@ var RAIL_ENGINE = RAIL_ENGINE || (function() {
 
             SCENE.add(three_js_drawable);
         },
-        
+
+        /**
+         * Controller Input
+         */
         set_clicked : function(c) {
             clicked = c;
         }
