@@ -17,7 +17,7 @@
 
             // shift death object to the left
             if (location[0] > -10) {
-                location[0] += 1;
+                location[0] -= 0.1;
                 avatar.position.x = location[0];
             }
 
