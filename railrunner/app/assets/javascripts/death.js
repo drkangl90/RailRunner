@@ -1,8 +1,8 @@
 ﻿function DeathObject() {
     // 3D Transform
-    var location = [10, 0, 0];
+    var location = [20, -2, 0];
     var orientation = [0, 0, 0];
-    var size = [5, 5, 1];
+    var size = [5, 1, 5];
 
 
     var avatar = new THREE.Mesh(
@@ -16,15 +16,15 @@
         update: function (clock_tick) {
 
             // shift death object to the left
-            if (location[0] > -10) {
+            if (location[0] > -20) {
                 location[0] -= 0.1;
                 avatar.position.x = location[0];
             }
 
             // relocate the death object to the right
-            if (location[0] <= -10)
+            if (location[0] <= -20)
             {
-                location[0] = 10;
+                location[0] = 20;
                 avatar.position.x = location[0];
             }
                         
