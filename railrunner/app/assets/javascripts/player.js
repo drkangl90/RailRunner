@@ -66,6 +66,12 @@ function Player() {
         },
         get_avatar : function() {
             return avatar;
+        },
+        get_x: function () {
+            return avatar.position.x;
+        },
+        get_y: function () {
+            return avatar.position.y;
         }
     }
 }

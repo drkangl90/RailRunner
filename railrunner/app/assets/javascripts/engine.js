@@ -25,10 +25,21 @@ var RAIL_ENGINE = RAIL_ENGINE || (function() {
     function game_frame() {
         if (game_thread_active) {
             var l = player_objects.length;
-            var m = death_objects.length;
+            //var m = death_objects.length;
             for(var i = 0; i < l; i++) {
                 player_objects[i].update(game_frame_rate, clicked);
                 death_objects[i].update(game_frame_rate);
+
+                var p_range = player_objects[i].get_x(); // 5
+                var d_range = death_objects[i].get_x();  // 20
+                console.log(p_range + " player");
+                console.log(d_range + " death");
+                console.log(Math.abs(death_objects[i].get_x())-(Math.abs(player_objects[i].get_x())));
+                if (Math.abs(death_objects[i].get_x()) - (Math.abs(player_objects[i].get_x())) < 0.5 && Math.abs(death_objects[i].get_x()) - (Math.abs(player_objects[i].get_x())) > -1)
+                {
+                    //window.alert("game reset");
+                    console.log("we have a hit!")
+                }
             }
         }
     }
