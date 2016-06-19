@@ -37,10 +37,10 @@ var RAIL_ENGINE = RAIL_ENGINE || (function() {
                 console.log(p_range + " player");
                 console.log(Math.abs(p_range) + " player");
                 console.log(d_range + " death");
-                console.log(ph_range + " player");
-                console.log(dh_range + " death");
+                console.log(ph_range + " player height");
+                console.log(dh_range + " death height");
                 console.log(Math.abs(death_objects[i].get_x())-(Math.abs(player_objects[i].get_x())));
-                if (death_objects[i].get_x() + (Math.abs(player_objects[i].get_x())) < 4.7 && player_objects[i].get_y() < 1)
+                if (death_objects[i].get_x() + (Math.abs(player_objects[i].get_x())) < 4.7 && player_objects[i].get_y() < .2)
                 {
                     window.alert("game reset");
                     console.log("we have a hit!")
