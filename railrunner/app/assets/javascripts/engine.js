@@ -42,8 +42,8 @@ var RAIL_ENGINE = RAIL_ENGINE || (function() {
                 console.log(Math.abs(death_objects[i].get_x())-(Math.abs(player_objects[i].get_x())));
                 if (death_objects[i].get_x() + (Math.abs(player_objects[i].get_x())) < 4.7 && player_objects[i].get_y() < .2)
                 {
+                    console.log("we have a hit!");
                     window.alert("game reset");
-                    console.log("we have a hit!")
                 }
             }
         }
