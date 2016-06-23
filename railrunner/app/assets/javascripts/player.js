@@ -3,6 +3,8 @@ function Player() {
     var location    = [-5,0,0];
     var orientation = [0,0,0];
     var size        = [5, 5, 5];
+    
+    var alive = true;
 
     // Jumping
     var jumpHeight  = 10;
@@ -21,8 +23,18 @@ function Player() {
         constructor : Player,
         update: function (clock_tick, clicked) {
 
-            if (clicked) {
+            //- Detect Input (if alive) ------------------=
+            //
+            if (alive && clicked) {
                 jumpStarted = true;
+
+            }
+            
+            //- Death Behavior ---------------------------=
+            //
+            if (! alive) {
+                // Roll in your grave.
+                orientation[0] += 0.15;
             }
 
             //- Jump Behavior ----------------------------=
@@ -64,14 +76,14 @@ function Player() {
             avatar.rotation.y = orientation[1];
             avatar.rotation.z = orientation[2];
         },
-        get_avatar : function() {
+        on_collide : function (collision_object) {
+            alive = false;
+        },
+        get_avatar : function () {
             return avatar;
         },
-        get_x: function () {
-            return avatar.position.x;
-        },
-        get_y: function () {
-            return avatar.position.y;
+        get_location : function () {
+            return location;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿function DeathObject() {
+function DeathObject() {
     // 3D Transform
     var location = [20, -2.5, 0];
     var orientation = [0, 0, 0];
@@ -27,16 +27,12 @@
                 location[0] = 20;
                 avatar.position.x = location[0];
             }
-                        
         },
-        get_avatar: function () {
+        get_avatar : function () {
             return avatar;
         },
-        get_x: function () {
-            return avatar.position.x;
-        },
-        get_y: function () {
-        return avatar.position.y;
+        get_location : function () {
+            return location;
         }
     }
 }

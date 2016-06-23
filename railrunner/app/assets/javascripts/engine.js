@@ -5,6 +5,8 @@ var RAIL_ENGINE = RAIL_ENGINE || (function() {
     var CAMERA = undefined;
     var SCENE = undefined;
     
+    var verbose_logging = true;
+    
     var player_objects = [];
     var death_objects = [];
     
@@ -25,30 +27,40 @@ var RAIL_ENGINE = RAIL_ENGINE || (function() {
     function game_frame() {
         if (game_thread_active) {
             var l = player_objects.length;
-            //var m = death_objects.length;
             for(var i = 0; i < l; i++) {
                 player_objects[i].update(game_frame_rate, clicked);
+            }
+            
+            var m = death_objects.length;
+            for(var i = 0; i < m; i++) {
                 death_objects[i].update(game_frame_rate);
                 
-                player_log = "Player: [" + player_objects[i].get_x() + ", " + player_objects[i].get_y() + "]";
-                death_log = "Death: [" + death_objects[i].get_x() + ", " + death_objects[i].get_y() + "]";
-                console.log(player_log);
-                console.log(death_log);
-                
-                delta_x = Math.abs(death_objects[i].get_x() - player_objects[i].get_x());
-                delta_y = Math.abs(death_objects[i].get_y() - player_objects[i].get_y());
-                delta_log = "Delta: <" + delta_x + ", " + delta_y + ">";
-                console.log(delta_log);
-                
-                if ( delta_x < 4.7 && player_objects[i].get_y() < .2 ) {
-                    console.log("we have a hit!");
-                    
-                    al  = player_log + "\n";
-                    al += death_log  + "\n";
-                    al += delta_log  + "\n";
-                    window.alert(al);
-                }
+                detect_player_collision(death_objects[i]);
             }
+        }
+    }
+    
+    function detect_player_collision(collision_object) {
+        player_loc = player_objects[0].get_location();
+        player_log = "Player: [" + player_loc[0] + ", " + player_loc[1] + "]";
+        
+        collision_loc = collision_object.get_location();
+        collision_log = "Collidable: [" + collision_loc[0] + ", " + collision_loc[1] + "]";
+        
+        p2p_delta = [];
+        p2p_delta[0] = player_loc[0] - collision_loc[0];
+        p2p_delta[1] = player_loc[1] - collision_loc[1];
+        p2p_delta[2] = player_loc[2] - collision_loc[2];
+        p2p_delta_log = "Point-to-Point Delta: <" + p2p_delta[0] + ", " + p2p_delta[1] + ">";
+        
+        if (verbose_logging) {
+            console.log(player_log);
+            console.log(collision_log);
+            console.log(p2p_delta_log);
+        }
+        
+        if ( Math.abs(p2p_delta[0]) < 4.7 && player_loc[1] < 0.2 ) {
+            player_objects[0].on_collide(collision_object);
         }
     }
     
