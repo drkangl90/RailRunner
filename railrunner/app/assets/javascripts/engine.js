@@ -29,21 +29,24 @@ var RAIL_ENGINE = RAIL_ENGINE || (function() {
             for(var i = 0; i < l; i++) {
                 player_objects[i].update(game_frame_rate, clicked);
                 death_objects[i].update(game_frame_rate);
-
-                var p_range = player_objects[i].get_x(); // 5
-                var d_range = death_objects[i].get_x();  // 20
-                var ph_range = player_objects[i].get_y(); // 5
-                var dh_range = death_objects[i].get_y();  // 20
-                console.log(p_range + " player");
-                console.log(Math.abs(p_range) + " player");
-                console.log(d_range + " death");
-                console.log(ph_range + " player height");
-                console.log(dh_range + " death height");
-                console.log(Math.abs(death_objects[i].get_x())-(Math.abs(player_objects[i].get_x())));
-                if (death_objects[i].get_x() + (Math.abs(player_objects[i].get_x())) < 4.7 && player_objects[i].get_y() < .2)
-                {
+                
+                player_log = "Player: [" + player_objects[i].get_x() + ", " + player_objects[i].get_y() + "]";
+                death_log = "Death: [" + death_objects[i].get_x() + ", " + death_objects[i].get_y() + "]";
+                console.log(player_log);
+                console.log(death_log);
+                
+                delta_x = Math.abs(death_objects[i].get_x() - player_objects[i].get_x());
+                delta_y = Math.abs(death_objects[i].get_y() - player_objects[i].get_y());
+                delta_log = "Delta: <" + delta_x + ", " + delta_y + ">";
+                console.log(delta_log);
+                
+                if ( delta_x < 4.7 && player_objects[i].get_y() < .2 ) {
                     console.log("we have a hit!");
-                    window.alert("game reset");
+                    
+                    al  = player_log + "\n";
+                    al += death_log  + "\n";
+                    al += delta_log  + "\n";
+                    window.alert(al);
                 }
             }
         }
